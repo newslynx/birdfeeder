@@ -26,7 +26,7 @@ required = [str(ir.req) for ir in parse_requirements("requirements.txt")]
 # setup
 setup(
   name='birdfeeder',
-  version='0.0.1',
+  version='0.0.2',
   description='A newslynx-opinionated wrapper around twython',
   long_description = long_description,
   classifiers=[
