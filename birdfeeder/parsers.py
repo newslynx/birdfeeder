@@ -77,43 +77,42 @@ def get_img_urls(e):
   return list(img_urls)
 
 def get_user_data(tweet):
-  user = tweet.get('user', {})
+  
   return {
+
+  }
+
+def parse_tweet(tweet):
+  
+  # get nested dicts
+  e = tweet.get('entities', {})
+  user = tweet.get('user', {})
+  
+  # extract
+  return {
+    'twitter_id': tweet.get('id_str', None),
+    'text': tweet.get('text', '').encode('utf-8'),
+    'datetime': get_datetime(tweet),
+    'in_reply_to_screen_name': tweet.get('in_reply_to_screen_name'),
+    'in_reply_to_status_id': tweet.get('in_reply_to_status_id_str'),
+    'urls': get_urls(e),
+    'hashtags': get_hashtags(e),
+    'user_mentions': get_user_mentions(e),
+    'img_urls': get_img_urls(e),
     'screen_name': user.get('screen_name', None),
     'verified': 1 if user.get('verified', False) else 0, # convert bool
     'user_location': user.get('location', None)
   }
 
-def parse_tweet(tweet):
-  # set basic values
-  output = {
-    'twitter_id': tweet.get('id_str', None),
-    'text': tweet.get('text', '').encode('utf-8'),
-    'datetime': get_datetime(tweet),
-    'in_reply_to_screen_name': tweet.get('in_reply_to_screen_name'),
-    'in_reply_to_status_id': tweet.get('in_reply_to_status_id_str')
-  }
-  # lists
-  e = tweet.get('entities', {})
-  output['urls'] = get_urls(e)
-  output['hashtags'] = get_hashtags(e)
-  output['user_mentions'] = get_user_mentions(e)
-  output['img_urls'] = get_img_urls(e)
-  
-  # user data
-  user = get_user_data(tweet)
-
-  return dict(user.items() + output.items())
-
 def parse_user_stats(user, screen_name):
-  output = {}
-  output['datetime'] = utc_now()
-  output['screen_name'] = screen_name
-  output['favorites'] = user.get('favourites_count', None)
-  output['followers'] = user.get('followers_count', None)
-  output['friends'] = user.get('friends_count', None)
-  output['listed'] = user.get('listed_count', None)
-  output['statuses'] = user.get('statuses_count', None)
-  return output
+  return {
+    'datetime' : utc_now(),
+    'screen_name' : screen_name,
+    'favorites' : user.get('favourites_count', None),
+    'followers' : user.get('followers_count', None),
+    'friends' : user.get('friends_count', None),
+    'listed' : user.get('listed_count', None),
+    'statuses' : user.get('statuses_count', None)
+  }
 
 
