@@ -3,7 +3,8 @@ import time
 import twython
 import logging
 from parsers import parse_tweet
-from main import connect, default_kws
+from defaults import default_kws
+from connection import connect 
 
 logging.basicConfig()
 logger = logging.getLogger("birdfeeder")

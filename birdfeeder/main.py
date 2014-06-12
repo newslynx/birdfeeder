@@ -1,46 +1,9 @@
-from twython import Twython 
-
+from functools import wraps
 from parsers import parse_user_stats
-import credentials
-from util import *
-
-"""
-Defaults for all tweet functions.
-"""
-
-default_kws = {
-  'paginate' : False,
-  'max_id': None,
-  'throttle' : 15,
-  'count' : 200,
-  'max_requests' : None,
-  'wait': 1,
-  'backoff': 2,
-  'timeout': 30  # timeout for a bit over the rate limit.
-}
-
-def connect(**kw):
-  """
-  Given environmental variables / kw, connect to twitter's api
-  """
-  
-  # load credentials
-  app_key = kw.get('app_key', credentials.TWT_API_KEY)
-  app_secret = kw.get('app_secret', credentials.TWT_API_SECRET)
-  oauth_token = kw.get('oauth_token', credentials.TWT_ACCESS_TOKEN)
-  oauth_secret = kw.get('oauth_secret', credentials.TWT_ACCESS_SECRET)
-  access_token = kw.get('access_token', None)
-
-  conn = Twython(
-    app_key = app_key,
-    app_secret = app_secret,
-    oauth_token = oauth_token,
-    oauth_token_secret = oauth_secret,
-    access_token = access_token
-    )
-
-  # authenticate
-  return conn
+import credentials as creds
+from util import (
+  paginate, catch_err, validate_kw, opt_connect
+)
 
 
 def twt(requires=[], default={}):
