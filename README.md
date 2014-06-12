@@ -96,6 +96,7 @@ With `birdfeeder`, pagination is simple, just add `pagination=True` to any metho
 
 ```python
 from birdfeeder import user_timeline 
+
 tweets = user_timeline(screen_name = 'newslynx', count = 5, pagination=True)
 for t in tweets:
   print t
