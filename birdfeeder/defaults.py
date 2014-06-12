@@ -7,5 +7,5 @@ default_kws = {
   'max_requests' : None,
   'wait': 1,
   'backoff': 2,
-  'timeout': 30  # timeout for a bit over the rate limit.
+  'timeout': 30 
 }

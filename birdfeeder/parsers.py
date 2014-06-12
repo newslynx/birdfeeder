@@ -76,12 +76,6 @@ def get_img_urls(e):
       img_urls.add(m.get('expanded_url'))
   return list(img_urls)
 
-def get_user_data(tweet):
-  
-  return {
-
-  }
-
 def parse_tweet(tweet):
   
   # get nested dicts

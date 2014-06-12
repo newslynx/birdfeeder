@@ -1,3 +1,3 @@
-nose
-sphinx
-pypandoc
+pytz>=2014.4
+siegfried>=0.1.3
+twython>=3.1.2

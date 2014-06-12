@@ -4,10 +4,10 @@ import twython
 from parsers import parse_tweet
 import credentials
 
-def _print(s):
-  print(s)
+def _print(d):
+  print(d)
 
-def _pass():
+def _pass(s, d):
   pass
 
 class Stream(TwythonStreamer):
@@ -31,5 +31,5 @@ class Stream(TwythonStreamer):
     self.store(self.parse(data))
 
   def on_error(self, status_code, data):
-    self.error()
+    self.error(status_code, data)
   
