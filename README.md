@@ -44,7 +44,6 @@ In addition, you can also pass in an authenticated user's token with `access_tok
 ```python
 from birdfeeder import connect, search
 
-conn = connect() 
 for t in search(q="hello world", access_token="authenticed_users_token"):
   print t
 ```
