@@ -5,7 +5,6 @@ from util import (
   paginate, catch_err, validate_kw, opt_connect
 )
 
-
 def twt(requires=[], default={}):
   """
   A decorator for a tweet function.
