@@ -86,6 +86,7 @@ This returns a dictionary of stats about a user, with the time it ran. It's inte
 
 ```python
 from birdfeeder import user_stats 
+
 stats = user_stats(screen_name = "newslynx")
 print stats
 ```
