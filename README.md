@@ -36,6 +36,7 @@ If you have `TWT_API_KEY`, `TWT_API_SECRET`, `TWT_ACCESS_TOKEN`, and `TWT_ACCESS
 from birdfeeder import connect, search
 
 conn = connect() 
+
 for t in search(q="hello world", conn=conn):
   print t
 ```
@@ -93,7 +94,8 @@ print stats
 
 With `birdfeeder`, pagination is simple, just add `pagination=True` to any method, ie:
 
-```
+```python
+from birdfeeder import user_timeline 
 tweets = user_timeline(screen_name = 'newslynx', count = 5, pagination=True)
 for t in tweets:
   print t

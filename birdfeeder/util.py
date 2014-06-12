@@ -42,7 +42,7 @@ def get_max_id(tweets):
   Get the max id for a response
   """
   
-  ids = [t['id'] for t in tweets]
+  ids = [t['id'] for t in tweets if t and 'id' in t]
   
   if len(ids) == 0:
     return None 

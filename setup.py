@@ -21,12 +21,12 @@ except (IOError, ImportError):
   long_description = ""
 
 # parse requirements file
-required = [str(ir.req) for ir in parse_requirements("requirements.txt")]
+# required = [str(ir.req) for ir in parse_requirements("requirements.txt")]
 
 # setup
 setup(
   name='birdfeeder',
-  version='0.0.4',
+  version='0.0.5',
   description='A newslynx-opinionated wrapper around twython',
   long_description = long_description,
   classifiers=[
