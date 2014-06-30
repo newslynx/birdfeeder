@@ -6,8 +6,36 @@ from parsers import parse_tweet
 from defaults import default_kws
 from connection import connect 
 
+try:
+  import gevent
+  from gevent.pool import Pool
+
+  # patch everything except for thread.
+  import gevent.monkey
+  gevent.monkey.patch_socket()
+  gevent.monkey.patch_ssl()
+  gevent.monkey.patch_os()
+  gevent.monkey.patch_time()
+  gevent.monkey.patch_select()
+  gevent.monkey.patch_subprocess()
+
+except ImportError:
+  imported_gevent = False
+else:
+  imported_gevent = True
+
 logging.basicConfig()
 logger = logging.getLogger("birdfeeder")
+
+def concurrent_yield(func, iterartor, **kw):
+  if imported_gevent:
+    p = Pool(kw.get('num_workers'))
+    for result in p.imap_unordered(func, iterartor):
+      yield result
+  else:
+    logger.warn('Cannot run concurrently without importing gevent')
+    for item in iterartor:
+      yield func(item)
 
 def validate_kw(kw, requires):
   """

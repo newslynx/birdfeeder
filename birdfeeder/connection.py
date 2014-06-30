@@ -1,4 +1,5 @@
 from twython import Twython 
+import credentials
 
 def connect(**kw):
   """
@@ -6,10 +7,10 @@ def connect(**kw):
   """
   
   # load credentials
-  app_key = kw.get('app_key', creds.TWT_API_KEY)
-  app_secret = kw.get('app_secret', creds.TWT_API_SECRET)
-  oauth_token = kw.get('oauth_token', creds.TWT_ACCESS_TOKEN)
-  oauth_secret = kw.get('oauth_secret', creds.TWT_ACCESS_SECRET)
+  app_key = kw.get('app_key', credentials.TWT_API_KEY)
+  app_secret = kw.get('app_secret', credentials.TWT_API_SECRET)
+  oauth_token = kw.get('oauth_token', credentials.TWT_ACCESS_TOKEN)
+  oauth_secret = kw.get('oauth_secret', credentials.TWT_ACCESS_SECRET)
   access_token = kw.get('access_token', None)
 
   conn = Twython(

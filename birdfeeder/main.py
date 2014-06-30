@@ -1,9 +1,11 @@
 from functools import wraps
-from parsers import parse_user_stats
+from parsers import parse_user_stats, parse_tweet
 import credentials as creds
 from util import (
-  paginate, catch_err, validate_kw, opt_connect
+  paginate, catch_err, validate_kw, 
+  opt_connect, concurrent_yield
 )
+
 
 def twt(requires=[], default={}):
   """
@@ -29,15 +31,16 @@ def twt(requires=[], default={}):
       # if were not paginating simply
       # run the function
       if not kw['paginate']:
-        
         tweets = catch_err(func, api, **kw)
-        for t in tweets:
-          yield parse_tweet(t)
-
-      # otherwise proceed with pagination
       else:
-        for t in paginate(func, api, **kw):
-          yield parse_tweet(t)
+        tweets = paginate(func, api, **kw)
+
+      # optionally run concurrent
+      if kw['concurrent']:
+        return concurrent_yield(parse_tweet, tweets, **kw)
+
+      else:
+        return (parse_tweet(t) for t in tweets)
   
     return f
   return twt_func
@@ -69,7 +72,6 @@ def user_timeline(api, **kw):
   """  
   return api.get_user_timeline(**kw)
 
-
 def user_stats(**kw):
   """
   Get stats about a user. 
@@ -86,7 +88,3 @@ def user_stats(**kw):
   screen_name = kw.get('screen_name')
   user = catch_err(_get_user, api, **kw)
   return parse_user_stats(user, screen_name)
-
-if __name__ == '__main__':
-  for t in search(q="towcenter", paginate=True):
-    print t

@@ -1,6 +1,8 @@
 
 default_kws = {
   'paginate' : False,
+  'concurrent': True,
+  'num_workers': 20,
   'max_id': None,
   'throttle' : 15,
   'count' : 200,
