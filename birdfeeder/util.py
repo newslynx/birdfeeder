@@ -15,7 +15,6 @@ try:
   gevent.monkey.patch_socket()
   gevent.monkey.patch_ssl()
   gevent.monkey.patch_os()
-  gevent.monkey.patch_time()
   gevent.monkey.patch_select()
   gevent.monkey.patch_subprocess()
 
@@ -26,6 +25,9 @@ else:
 
 logging.basicConfig()
 logger = logging.getLogger("birdfeeder")
+
+class TimeoutError(Exception):
+  pass
 
 def concurrent_yield(func, iterartor, **kw):
   if imported_gevent:
@@ -90,6 +92,7 @@ def catch_err(func, api, **kw):
   timeout = kw.get('timeout')
 
   # try until we timeout
+  t0 = time.time()
   while True:
     try:
       tweets = func(api, **kw)
@@ -97,14 +100,15 @@ def catch_err(func, api, **kw):
     
     # backoff from errors
     except twython.exceptions.TwythonError as e:
-      t0 = time.time()
       time.sleep(wait)
       wait *= backoff
 
       # timeout
       now = time.time()
       if now - t0 > timeout:
-        logger.warn("Timing out beacause of {0}".format(e))
+        err_msg = "Timing out beacause of {0}".format(e)
+        logger.error(err_msg)
+        # raise TimeoutError(err_msg)
         tweets = []
         break
 

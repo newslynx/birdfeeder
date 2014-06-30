@@ -33,29 +33,30 @@ Thus far, we've implemented 5 methods: `connect`, `search`, `list_timeline`, `us
 If you have `TWT_API_KEY`, `TWT_API_SECRET`, `TWT_ACCESS_TOKEN`, and `TWT_ACCESS_SECRET` set as environmental variables, you can use all the methods without explicitly connecting.  However, if you want to explicitly connect beforehand, you can also pass in a connection as `conn` to any method:
 
 ```python
-from birdfeeder import connect, search
+import birdfeeder
 
-conn = connect() 
+conn = birdfeeder.connect() 
 
-for t in search(q="hello world", conn=conn):
+tweets = birdfeeder.search(q="hello world", count=10, conn=conn)
+for t in tweets:
   print t
 ```
 
 In addition, you can also pass in an authenticated user's token with `access_token`:
 
 ```python
-from birdfeeder import connect, search
+import birdfeeder
 
-for t in search(q="hello world", access_token="authenticed_users_token"):
+for t in birdfeeder.search(q="hello world", access_token="authenticed_users_token"):
   print t
 ```
 
 ### Search
 
 ```python
-from birdfeeder import search, connect
+import birdfeeder
 
-tweets = search(q="hello world", count=10)
+tweets = birdfeeder.search(q="hello world", count=10)
 for t in tweets:
   print t
 ```
@@ -63,9 +64,9 @@ for t in tweets:
 ### List Timeline
 
 ```python
-from birdfeeder import list_timeline 
+import birdfeeder
 
-tweets = list_timeline(owner_screen_name = 'cspan', slug = 'members-of-congress', count=100)
+tweets = birdfeeder.list_timeline(owner_screen_name = 'cspan', slug = 'members-of-congress', count=100)
 for t in tweets:
   print t 
 ```
@@ -73,9 +74,9 @@ for t in tweets:
 ### User Timeline
 
 ```python
-from birdfeeder import user_timeline 
+import birdfeeder 
 
-tweets = user_timeline(screen_name = 'newslynx')
+tweets = birdfeeder.user_timeline(screen_name = 'newslynx')
 for t in tweets:
   print t
 ```
@@ -85,9 +86,9 @@ for t in tweets:
 This returns a dictionary of stats about a user, with the time it ran. It's intended for creating a time series of a user's metadata:
 
 ```python
-from birdfeeder import user_stats 
+import birdfeeder 
 
-stats = user_stats(screen_name = "newslynx")
+stats = birdfeeder.user_stats(screen_name = "newslynx")
 print stats
 ```
 
@@ -96,13 +97,23 @@ print stats
 With `birdfeeder`, pagination is simple, just add `pagination=True` to any method, ie:
 
 ```python
-from birdfeeder import user_timeline 
+import birdfeeder
 
-tweets = user_timeline(screen_name = 'newslynx', count = 5, pagination=True)
+tweets = birdfeeder.user_timeline(screen_name = 'newslynx', count = 5, pagination=True)
 for t in tweets:
   print t
 ```
+
 This will keep track of the `max_id` of each request and iterate through results until everything has been retrieved (or until otherwise specified - more below). For each request, it will wait for a defualt of 15 seconds so as to avoid rate limiting.
+
+## Concurrency
+add concurrency to any method via `gevent`:
+```python
+
+tweets = birdfeeder.user_timeline(screen_name="brianabelson", concurrent=True)
+for t in tweets:
+  print t
+```
 
 ## Custom Options
 We've added some custom options for each method, they are as follows:
@@ -118,6 +129,8 @@ Here are the default arguments for all methods:
 ```python
 default_kws = {
   'paginate' : False,
+  'concurrent': False,
+  'num_workers': 20,
   'max_id': None,
   'throttle' : 15,
   'count' : 200,
