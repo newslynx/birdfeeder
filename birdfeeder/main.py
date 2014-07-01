@@ -1,6 +1,5 @@
 from functools import wraps
 from parsers import parse_user_stats, parse_tweet
-import credentials as creds
 from util import (
   paginate, catch_err, validate_kw, 
   opt_connect, concurrent_yield
