@@ -88,7 +88,3 @@ def user_stats(**kw):
   screen_name = kw.get('screen_name')
   user = catch_err(_get_user, api, **kw)
   return parse_user_stats(user, screen_name)
-
-if __name__ == '__main__':
-  for t in user_timeline(screen_name="brianabelson", paginate=True, concurrent=True):
-    print t
