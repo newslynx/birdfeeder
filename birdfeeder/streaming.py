@@ -21,7 +21,7 @@ class Stream(TwythonStreamer):
       kw.get('app_key', credentials.TWT_API_KEY),
       kw.get('app_secret', credentials.TWT_API_SECRET),
       kw.get('oauth_token', credentials.TWT_ACCESS_TOKEN),
-      kw.get('oauth_token secret', credentials.TWT_ACCESS_SECRET)
+      kw.get('oauth_token_secret', credentials.TWT_ACCESS_SECRET)
       )
     self.parse = kw.get('parse', parse_tweet)
     self.store = kw.get('store', _print)
