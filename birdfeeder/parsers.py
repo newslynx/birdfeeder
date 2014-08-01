@@ -46,9 +46,10 @@ def get_urls(e):
   return list(urls)
 
 def get_datetime(tweet):
-  dt = datetime.strptime(tweet['created_at'], TWT_DATE_FORMAT)
-  dt = dt.replace(tzinfo = pytz.utc)
-  return dt
+  if 'created_at' in tweet:
+    dt = datetime.strptime(tweet['created_at'], TWT_DATE_FORMAT)
+    dt = dt.replace(tzinfo = pytz.utc)
+    return dt
 
 def get_hashtags(e):
   hashtags = set()
