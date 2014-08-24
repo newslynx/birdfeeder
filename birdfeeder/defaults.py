@@ -9,5 +9,5 @@ default_kws = {
   'max_requests' : None,
   'wait': 1,
   'backoff': 2,
-  'timeout': 30 
+  'timeout': 10 
 }
