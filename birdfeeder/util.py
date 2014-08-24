@@ -63,7 +63,7 @@ def opt_connect(**kw):
   argument in.
   """
   if 'conn' in kw:
-    return conn 
+    return kw['conn']
   else:
     return connect(**kw)
 
