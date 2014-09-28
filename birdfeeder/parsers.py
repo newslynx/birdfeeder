@@ -77,6 +77,9 @@ def get_img_urls(e):
       img_urls.add(m.get('expanded_url'))
   return list(img_urls)
 
+def build_permalink(tweet):
+  return "http://twitter.com/{screen_name}/statues/{twitter_id".format(**tweet)
+
 def parse_tweet(tweet):
   
   # get nested dicts
@@ -84,7 +87,7 @@ def parse_tweet(tweet):
   user = tweet.get('user', {})
   
   # extract
-  return {
+  data = {
     'twitter_id': tweet.get('id_str', None),
     'text': tweet.get('text', '').encode('utf-8'),
     'datetime': get_datetime(tweet),
@@ -100,6 +103,8 @@ def parse_tweet(tweet):
     'followers_count': user.get('followers_count'),
     'friends_count': user.get('friends_count')
   }
+  data['link'] = build_permalink(data)
+  return data
 
 def parse_user_stats(user, screen_name):
   return {
