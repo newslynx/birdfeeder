@@ -78,7 +78,7 @@ def get_img_urls(e):
   return list(img_urls)
 
 def build_permalink(tweet):
-  return "http://twitter.com/{screen_name}/statues/{twitter_id".format(**tweet)
+  return "http://twitter.com/{screen_name}/statues/{twitter_id}".format(**tweet)
 
 def parse_tweet(tweet):
   
