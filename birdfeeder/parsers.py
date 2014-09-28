@@ -96,7 +96,9 @@ def parse_tweet(tweet):
     'img_urls': get_img_urls(e),
     'screen_name': user.get('screen_name', None),
     'verified': 1 if user.get('verified', False) else 0, # convert bool
-    'user_location': user.get('location', None)
+    'user_location': user.get('location', None),
+    'followers_count': user.get('followers_count'),
+    'friends_count': user.get('friends_count')
   }
 
 def parse_user_stats(user, screen_name):

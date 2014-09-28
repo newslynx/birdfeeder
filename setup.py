@@ -26,7 +26,7 @@ except (IOError, ImportError):
 # setup
 setup(
   name='birdfeeder',
-  version='0.1.5',
+  version='0.1.6',
   description='A newslynx-opinionated wrapper around twython',
   long_description = long_description,
   classifiers=[
