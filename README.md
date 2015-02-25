@@ -94,12 +94,12 @@ print stats
 
 ## Pagination
 
-With `birdfeeder`, pagination is simple, just add `pagination=True` to any method, ie:
+With `birdfeeder`, pagination is simple, just add `paginate=True` to any method, ie:
 
 ```python
 import birdfeeder
 
-tweets = birdfeeder.user_timeline(screen_name = 'newslynx', count = 5, pagination=True)
+tweets = birdfeeder.user_timeline(screen_name = 'newslynx', count = 5, paginate=True)
 for t in tweets:
   print t
 ```
